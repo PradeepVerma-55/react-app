@@ -1,17 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-const parent= React.createElement('div', { className: 'parent' },
-    [React.createElement('div', { className: 'child' },
-        React.createElement('h1', {}, 'I am h1 tag - div 1'),
-        React.createElement('h2', {}, 'I am h2 tag -div 1')
-    ),
-    React.createElement('div', { className: 'child' },
-        React.createElement('h1', {}, 'I am h1 tag - div 2'),
-        React.createElement('h2', {}, 'I am h2 tag - div 2')
-    )]
-);
+const heading = React.createElement(
+                    "h1", 
+                    { id: "heading" },
+                     "Hello World from React"
+                    );
+  //JXS - HTML like syntax     
+  // JXS (transpiled before it reaches to the React/JS Engine)  --> React.createElement()          
+  // Babel is used to transpile the JSX code to React.createElement() code
+  // Parcel Bundler comes with Babel pre-configured
+  // Parcel is used to bundle the code and its dependencies into a single file for the browser to understand
+  // Parcel also comes with a development server that hot reloads the code on changes
+const jsxHeading = <h1 id='heading'>Hello React using JSX</h1>                   
 
-console.log(parent);
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(parent);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(heading);
+
