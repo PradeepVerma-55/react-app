@@ -63,4 +63,15 @@ Replace `<repo-url>` placeholders above with your preferred remote URL if needed
 
 ---
 
-If you'd like, I can commit any further README edits and push them to `origin/main` now.
+**What is Parcel?**
+This project uses [Parcel](https://parceljs.org/) — a zero-config web application bundler. Here are the key benefits:
+
+- **Zero Configuration**: Works out of the box with no config files needed; automatic detection of file types.
+- **Fast Bundling**: Optimized for speed with fast refresh during development.
+- **Multi-format Support**: Handles JavaScript, TypeScript, CSS, HTML, images, and more without extra setup.
+- **Hot Module Replacement (HMR)**: Instantly updates code changes in the browser without full page reload.
+- **Built-in Optimization**: Automatic minification, code splitting, and tree-shaking for production builds.
+- **Development Server**: Built-in dev server with live reloading; no need for separate tools.
+- **Asset Handling**: Automatically bundles CSS, images, fonts, and other assets.
+- **Production Ready**: Creates optimized, minified bundles for deployment with a single command.
+
