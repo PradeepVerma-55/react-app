@@ -75,3 +75,8 @@ This project uses [Parcel](https://parceljs.org/) — a zero-config web applicat
 - **Asset Handling**: Automatically bundles CSS, images, fonts, and other assets.
 - **Production Ready**: Creates optimized, minified bundles for deployment with a single command.
 
+# state variable to hold the list of restaurants
+# it can be implemented using useState hook
+# its normal javaScript function 
+# two very important hooks in react
+# useState and useEffect

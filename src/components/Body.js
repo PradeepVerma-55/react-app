@@ -1,15 +1,64 @@
 import RestaurantCard from "./RestaurantCard";
 import resList from "../utils/mockdata";
+import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
+
 const Body = () => {
-  return (
+  //state variable to hold the list of restaurants
+  // it can be implemented using useState hook
+  // its normal javaScript function
+  // two very important hooks in react
+  // useState and useEffect
+  const [listOfRestaurants, setlistOfRestaurants] = useState([]);
+  
+  useEffect(() => {
+    console.log("useEffect called");
+    fetchData();
+  }, []);
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const fetchData = async () => {
+    // API call to fetch data
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const json = await data.json();
+    console.log(json);
+    // artificial delay before updating state (10 seconds)
+    // await sleep(10000);
+    // console.log("Resuming after 10s delay");
+
+    console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setlistOfRestaurants(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+  };
+
+  // Callback function and dependency array
+  //Callback function will be executed after component is rendered
+  // dependency array is used to control when the useEffect should be called
+  // If you need to do something after rendering the component, you can use useEffect with an empty dependency array
+
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
-      <div className="search">search</div>
+      <div className="filter">
+        <button
+          className="filter-btn"
+          onClick={() => {
+            // Filter logic to be implemented
+            const filteredlist = listOfRestaurants.filter(
+              (restaurant) => restaurant.info.avgRating > 4.5
+            );
+            setlistOfRestaurants(filteredlist);
+          }}
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
       <div className="res-container">
-        {
-          resList.map((restaurant) => (
-            <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
-          ))
-        }
+        {listOfRestaurants.map((restaurant) => (
+          <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
+        ))}
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import { CDN_URL } from "../utils/constants";   
 
 const RestaurantCard = (props) => {
-  console.log(props);
+  
   const { resData } = props;
-const {name,cloudinaryImageId,avgRatingString,cuisines} = resData ? resData : {};
+  console.log(resData);
+const {name,cloudinaryImageId,avgRatingString,cuisines,sla,costForTwo} = resData ? resData : {};
 
   return (
     <div className="res-card">
@@ -15,6 +16,8 @@ const {name,cloudinaryImageId,avgRatingString,cuisines} = resData ? resData : {}
       <h3>{name}</h3>
       <h4>{cuisines}</h4>
       <h4>{avgRatingString} stars</h4>
+      <h4>{costForTwo}</h4>
+      <h4>{sla?.slaString}</h4>
     </div>
   );
 };
