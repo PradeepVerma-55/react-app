@@ -19,16 +19,16 @@ const Body = () => {
 
   const fetchData = async () => {
     // API call to fetch data
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const data = await fetch("https://namastedev.com/api/v1/listRestaurants");
     const json = await data.json();
     console.log(json);
     // artificial delay before updating state (10 seconds)
     // await sleep(10000);
     // console.log("Resuming after 10s delay");
 
-    console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    //console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     setlistOfRestaurants(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
 
@@ -57,6 +57,7 @@ const Body = () => {
       </div>
       <div className="res-container">
         {listOfRestaurants.map((restaurant) => (
+          console.log(restaurant),
           <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
         ))}
       </div>
