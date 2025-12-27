@@ -4,13 +4,15 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 
 const Body = () => {
+
+  console.log("Body Rendered");
   //state variable to hold the list of restaurants
   // it can be implemented using useState hook
   // its normal javaScript function
   // two very important hooks in react
   // useState and useEffect
   const [listOfRestaurants, setlistOfRestaurants] = useState([]);
-  
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     console.log("useEffect called");
     fetchData();
@@ -21,14 +23,15 @@ const Body = () => {
     // API call to fetch data
     const data = await fetch("https://namastedev.com/api/v1/listRestaurants");
     const json = await data.json();
-    console.log(json);
+    //console.log(json);
     // artificial delay before updating state (10 seconds)
     // await sleep(10000);
     // console.log("Resuming after 10s delay");
 
     //console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     setlistOfRestaurants(
-      json.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
     );
   };
 
@@ -42,6 +45,25 @@ const Body = () => {
   ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            className="search-btn"
+            onClick={() => {
+             // console.log("My Text => " + searchText);
+            }}
+          >
+            Search
+          </button>
+        </div>
+
         <button
           className="filter-btn"
           onClick={() => {
@@ -56,10 +78,17 @@ const Body = () => {
         </button>
       </div>
       <div className="res-container">
-        {listOfRestaurants.map((restaurant) => (
-          console.log(restaurant),
-          <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
-        ))}
+        {listOfRestaurants.map(
+          (restaurant) => (
+           // console.log(restaurant),
+            (
+              <RestaurantCard
+                key={restaurant.info.id}
+                resData={restaurant.info}
+              />
+            )
+          )
+        )}
       </div>
     </div>
   );
