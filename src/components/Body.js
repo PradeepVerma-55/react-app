@@ -1,20 +1,19 @@
 import RestaurantCard from "./RestaurantCard";
-import resList from "../utils/mockdata";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 
 const Body = () => {
-
-  console.log("Body Rendered");
+  //console.log("Body Rendered");
   //state variable to hold the list of restaurants
   // it can be implemented using useState hook
   // its normal javaScript function
   // two very important hooks in react
   // useState and useEffect
   const [listOfRestaurants, setlistOfRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
   useEffect(() => {
-    console.log("useEffect called");
+    // console.log("useEffect called");
     fetchData();
   }, []);
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -33,9 +32,13 @@ const Body = () => {
       json.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
+    setFilteredRestaurants(
+      json.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
   };
 
-  // Callback function and dependency array
+  //Callback function and dependency array
   //Callback function will be executed after component is rendered
   // dependency array is used to control when the useEffect should be called
   // If you need to do something after rendering the component, you can use useEffect with an empty dependency array
@@ -57,7 +60,14 @@ const Body = () => {
           <button
             className="search-btn"
             onClick={() => {
-             // console.log("My Text => " + searchText);
+              const filteredList = listOfRestaurants.filter((restaurant) =>
+                restaurant.info.name
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase())
+              );
+              //console.log(filteredList);
+              setFilteredRestaurants(filteredList);
+              // console.log("My Text => " + searchText);
             }}
           >
             Search
@@ -68,27 +78,19 @@ const Body = () => {
           className="filter-btn"
           onClick={() => {
             // Filter logic to be implemented
-            const filteredlist = listOfRestaurants.filter(
+            const filteredlist = filteredRestaurants.filter(
               (restaurant) => restaurant.info.avgRating > 4.5
             );
-            setlistOfRestaurants(filteredlist);
+            setFilteredRestaurants(filteredlist);
           }}
         >
           Top Rated Restaurants
         </button>
       </div>
       <div className="res-container">
-        {listOfRestaurants.map(
-          (restaurant) => (
-           // console.log(restaurant),
-            (
-              <RestaurantCard
-                key={restaurant.info.id}
-                resData={restaurant.info}
-              />
-            )
-          )
-        )}
+        {filteredRestaurants.map((restaurant) => (
+          <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
+        ))}
       </div>
     </div>
   );
